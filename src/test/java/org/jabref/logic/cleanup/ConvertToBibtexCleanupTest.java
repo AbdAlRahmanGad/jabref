@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.field.StandardField;
+import org.jabref.model.entry.types.StandardEntryType;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,5 +61,12 @@ public class ConvertToBibtexCleanupTest {
         worker.cleanup(entry);
 
         assertEquals(Optional.of(fileField), entry.getField(StandardField.FILE));
+    }
+
+    @Test
+    public void cleanupMovesMasterThesesToTheses() {
+        BibEntry entry = new BibEntry(StandardEntryType.MastersThesis).withField(StandardField.JOURNALTITLE, "Best of JabRef");
+        worker.cleanup(entry);
+        assertEquals(StandardEntryType.Thesis, entry.getType());
     }
 }

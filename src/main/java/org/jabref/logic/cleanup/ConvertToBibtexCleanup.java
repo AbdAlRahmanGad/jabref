@@ -9,6 +9,7 @@ import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.EntryConverter;
 import org.jabref.model.entry.field.Field;
 import org.jabref.model.entry.field.StandardField;
+import org.jabref.model.entry.types.EntryType;
 import org.jabref.model.strings.StringUtil;
 
 /**
@@ -18,6 +19,7 @@ public class ConvertToBibtexCleanup implements CleanupJob {
 
     @Override
     public List<FieldChange> cleanup(BibEntry entry) {
+        /// problem 1 -> How can we track the changes made to the entry Type?
         List<FieldChange> changes = new ArrayList<>();
 
         // Dates: get date and fill year and month
@@ -47,6 +49,14 @@ public class ConvertToBibtexCleanup implements CleanupJob {
                 }
             });
         }
+        for (Map.Entry<EntryType, EntryType> alias : EntryConverter.EntryType_ALIASES_BIBLATEX_TO_BIBTEX.entrySet()) {
+            EntryType oldType = alias.getKey();
+            EntryType newType = alias.getValue();
+            if (entry.getType().equals(oldType)) {
+                entry.setType(newType);
+            }
+        }
+
         return changes;
     }
 }

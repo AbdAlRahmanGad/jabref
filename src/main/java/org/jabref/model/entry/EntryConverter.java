@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.jabref.model.entry.field.Field;
 import org.jabref.model.entry.field.StandardField;
+import org.jabref.model.entry.types.EntryType;
+import org.jabref.model.entry.types.StandardEntryType;
 
 /**
  * Converts Entry models from BibTeX to biblatex and back.
@@ -15,6 +17,10 @@ public class EntryConverter {
     public static Map<Field, Field> FIELD_ALIASES_BIBTEX_TO_BIBLATEX;
 
     public static Map<Field, Field> FIELD_ALIASES_BIBLATEX_TO_BIBTEX;
+
+    public static Map<EntryType, EntryType> EntryType_ALIASES_BIBLATEX_TO_BIBTEX;
+
+    public static Map<EntryType, EntryType> EntryType_ALIASES_BIBTEX_TO_BIBLATEX;
 
     // All aliases
     public static Map<Field, Field> FIELD_ALIASES;
@@ -38,6 +44,10 @@ public class EntryConverter {
         FIELD_ALIASES = new HashMap<>();
         FIELD_ALIASES.putAll(EntryConverter.FIELD_ALIASES_BIBTEX_TO_BIBLATEX);
         FIELD_ALIASES.putAll(EntryConverter.FIELD_ALIASES_BIBLATEX_TO_BIBTEX);
+
+        // Entry type aliases
+        EntryConverter.EntryType_ALIASES_BIBLATEX_TO_BIBTEX = new HashMap<>();
+        EntryConverter.EntryType_ALIASES_BIBLATEX_TO_BIBTEX.put(StandardEntryType.MastersThesis, StandardEntryType.Thesis);
     }
 
     private EntryConverter() {
